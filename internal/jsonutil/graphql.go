@@ -90,12 +90,13 @@ func (d *decoder) decode() error {
 			for i := range d.vs {
 				v := d.vs[i][len(d.vs[i])-1]
 				ki := v.Kind()
+				fmt.Println(ki)
 
-				if ki == reflect.Ptr {
+				if v.Kind() == reflect.Ptr {
 					v = v.Elem()
 				}
 				var f reflect.Value
-				if ki == reflect.Struct {
+				if v.Kind() == reflect.Struct {
 					f = fieldByGraphQLName(v, key)
 					if f.IsValid() {
 						someFieldExist = true
