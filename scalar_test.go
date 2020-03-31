@@ -3,7 +3,7 @@ package graphql_test
 import (
 	"testing"
 
-	"github.com/shurcooL/graphql"
+	"github.com/nbcnews/graphql"
 )
 
 func TestNewScalars(t *testing.T) {
@@ -25,6 +25,9 @@ func TestNewScalars(t *testing.T) {
 		t.Error("NewInt returned nil")
 	}
 	if got := graphql.NewString(""); got == nil {
+		t.Error("NewString returned nil")
+	}
+	if got := graphql.NewJSON(""); got == nil {
 		t.Error("NewString returned nil")
 	}
 }

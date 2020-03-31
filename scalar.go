@@ -1,5 +1,7 @@
 package graphql
 
+import "encoding/json"
+
 // Note: These custom types are meant to be used in queries for now.
 // But the plan is to switch to using native Go types (string, int, bool, time.Time, etc.).
 // See https://github.com/shurcooL/githubv4/issues/9 for details.
@@ -33,6 +35,9 @@ type (
 	// This type is most often used by GraphQL to represent free-form
 	// human-readable text.
 	String string
+
+	// JSON supports the json types
+	JSON json.RawMessage
 )
 
 // NewBoolean is a helper to make a new *Boolean.
@@ -49,3 +54,6 @@ func NewInt(v Int) *Int { return &v }
 
 // NewString is a helper to make a new *String.
 func NewString(v String) *String { return &v }
+
+// NewJSON is a helper to make a new JSON
+func NewJSON(v JSON) *JSON { return &v }
