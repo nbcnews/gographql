@@ -10,10 +10,10 @@ import (
 	"github.com/shurcooL/graphql/ident"
 )
 
-func constructQuery(v interface{}, variables map[string]interface{}) string {
+func constructQuery(v interface{}, variables map[string]interface{}, operationName string) string {
 	query := query(v)
 	if len(variables) > 0 {
-		return "query(" + queryArguments(variables) + ")" + query
+		return "query" + operationName + "(" + queryArguments(variables) + ")" + query
 	}
 	return query
 }
