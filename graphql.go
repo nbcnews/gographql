@@ -65,19 +65,19 @@ func NewClient(url string, httpClient *http.Client, opts ...ClientOptFunc) (c *C
 // Query executes a single GraphQL query request,
 // with a query derived from q, populating the response into it.
 // q should be a pointer to struct that corresponds to the GraphQL schema.
-func (c *Client) Query(ctx context.Context, q interface{}, variables map[string]interface{}) error {
-	return c.do(ctx, queryOperation, q, variables)
+func (c *Client) Query(ctx context.Context, q interface{}, variables map[string]interface{}, operationName string) error {
+	return c.do(ctx, queryOperation, q, variables, operationName)
 }
 
 // Mutate executes a single GraphQL mutation request,
 // with a mutation derived from m, populating the response into it.
 // m should be a pointer to struct that corresponds to the GraphQL schema.
-func (c *Client) Mutate(ctx context.Context, m interface{}, variables map[string]interface{}) error {
-	return c.do(ctx, mutationOperation, m, variables)
+func (c *Client) Mutate(ctx context.Context, m interface{}, variables map[string]interface{}, operationName string) error {
+	return c.do(ctx, mutationOperation, m, variables, operationName)
 }
 
 // do executes a single GraphQL operation.
-func (c *Client) do(ctx context.Context, op operationType, v interface{}, variables map[string]interface{}) error {
+func (c *Client) do(ctx context.Context, op operationType, v interface{}, variables map[string]interface{}, operationName string) error {
 	var query string
 	switch op {
 	case queryOperation:
@@ -86,11 +86,13 @@ func (c *Client) do(ctx context.Context, op operationType, v interface{}, variab
 		query = constructMutation(v, variables)
 	}
 	in := struct {
-		Query     string                 `json:"query"`
-		Variables map[string]interface{} `json:"variables,omitempty"`
+		Query         string                 `json:"query"`
+		OperationName string                 `json:"operationName"`
+		Variables     map[string]interface{} `json:"variables,omitempty"`
 	}{
-		Query:     query,
-		Variables: variables,
+		OperationName: operationName,
+		Query:         query,
+		Variables:     variables,
 	}
 	var buf bytes.Buffer
 	err := json.NewEncoder(&buf).Encode(in)
