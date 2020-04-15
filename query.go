@@ -13,7 +13,7 @@ import (
 func constructQuery(v interface{}, variables map[string]interface{}, operationName string) string {
 	query := query(v)
 	if len(variables) > 0 {
-		return "query" + operationName + "(" + queryArguments(variables) + ")" + query
+		return "query " + operationName + "(" + queryArguments(variables) + ")" + query
 	}
 	return query
 }
