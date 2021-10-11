@@ -165,7 +165,7 @@ func TestConstructQuery(t *testing.T) {
 				"repositoryName":  String("test-repo"),
 				"issueNumber":     Int(1),
 			},
-			want: `query($issueNumber:Int!$repositoryName:String!$repositoryOwner:String!){repository(owner: $repositoryOwner, name: $repositoryName){issue(number: $issueNumber){body}}}`,
+			want: `query ($issueNumber:Int!$repositoryName:String!$repositoryOwner:String!){repository(owner: $repositoryOwner, name: $repositoryName){issue(number: $issueNumber){body}}}`,
 		},
 		{
 			inV: struct {
@@ -186,7 +186,7 @@ func TestConstructQuery(t *testing.T) {
 				"repositoryName":  String("test-repo"),
 				"issueNumber":     Int(1),
 			},
-			want: `query($issueNumber:Int!$repositoryName:String!$repositoryOwner:String!){repository(owner: $repositoryOwner, name: $repositoryName){issue(number: $issueNumber){reactionGroups{users(first:10){nodes{login}}}}}}`,
+			want: `query ($issueNumber:Int!$repositoryName:String!$repositoryOwner:String!){repository(owner: $repositoryOwner, name: $repositoryName){issue(number: $issueNumber){reactionGroups{users(first:10){nodes{login}}}}}}`,
 		},
 		// Embedded structs without graphql tag should be inlined in query.
 		{
@@ -229,7 +229,7 @@ func TestConstructQuery(t *testing.T) {
 		},
 	}
 	for _, tc := range tests {
-		got := constructQuery(tc.inV, tc.inVariables)
+		got := constructQuery(tc.inV, tc.inVariables, "")
 		if got != tc.want {
 			t.Errorf("\ngot:  %q\nwant: %q\n", got, tc.want)
 		}

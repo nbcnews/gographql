@@ -2,6 +2,7 @@ package jsonutil_test
 
 import (
 	"encoding/json"
+	"github.com/nbcnews/graphql/internal/jsonutil"
 	"io"
 	"reflect"
 	"strings"
@@ -9,7 +10,6 @@ import (
 	"time"
 
 	"github.com/shurcooL/graphql"
-	"github.com/shurcooL/graphql/internal/jsonutil"
 )
 
 func TestUnmarshalGraphQL_benchmark(t *testing.T) {
