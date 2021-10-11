@@ -2,13 +2,13 @@ package jsonutil_test
 
 import (
 	"encoding/json"
-	"github.com/nbcnews/graphql/internal/jsonutil"
 	"io"
 	"reflect"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/nbcnews/graphql/internal/jsonutil"
 	"github.com/shurcooL/graphql"
 )
 
