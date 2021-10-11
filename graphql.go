@@ -11,12 +11,6 @@ import (
 	"github.com/nbcnews/graphql/internal/jsonutil"
 )
 
-var (
-	defaultClientHeaders = map[string]string{
-		"Content-Type": "application/json",
-	}
-)
-
 // ClientOptFunc graphql client option
 type ClientOptFunc func(*Client)
 
@@ -52,7 +46,9 @@ func NewClient(url string, httpClient *http.Client, opts ...ClientOptFunc) (c *C
 		httpClient = http.DefaultClient
 	}
 	c = &Client{
-		headers:    defaultClientHeaders,
+		headers: 	map[string]string{
+			"Content-Type": "application/json",
+		},
 		url:        url,
 		httpClient: httpClient,
 	}
